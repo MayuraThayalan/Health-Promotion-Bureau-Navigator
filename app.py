@@ -14,6 +14,7 @@ from langchain_classic.chains.combine_documents import create_stuff_documents_ch
 
 base_path = Path(__file__).resolve().parent
 env_path = base_path / '.env'
+load_dotenv(dotenv_path=env_path)
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"])
