@@ -1,14 +1,14 @@
-Sri Lanka Health Promotion Navigator
+##Sri Lanka Health Promotion Navigator
 
 This RAG-based AI assistant is specifically engineered to navigate the National Health Promotion Programme Strategic Plan (2024-2030) for Sri Lanka. It serves as a digital consultant for public health officials, students, and citizens to understand the future of health promotion in the country.
 
-**Document Scope**
-The bot provides insights into:
-Strategic Objectives: The core pillars of Sri Lanka's health strategy for the next 6 years.
-National Policies: Public health frameworks and government health initiatives.
-Implementation Plans: How the Health Promotion Bureau (HPB) intends to reach national health targets.
+##**Document Scope**
+**The bot provides insights into:
+**Strategic Objectives: The core pillars of Sri Lanka's health strategy for the next 6 years.
+**National Policies: Public health frameworks and government health initiatives.
+**Implementation Plans: How the Health Promotion Bureau (HPB) intends to reach national health targets.
 
-**Sample Questions**
+##**Sample Questions**
 "What are the primary strategic objectives for 2030?"
 "How does the plan address non-communicable diseases (NCDs)?"
 "What is the role of the Health Promotion Bureau according to the 2024-2030 plan?"
