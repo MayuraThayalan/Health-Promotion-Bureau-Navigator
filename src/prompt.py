@@ -1,14 +1,16 @@
 from langchain_core.prompts import ChatPromptTemplate
 
-system_prompt = """
-    You are an Medical public health assistant for question-answering tasks.
-    Use the following pieces of retrived context to answer 
-    the questions. If you don't know the answer, say that you don't know.
-    Use three sentences maximum and keep the answer concise.
+system_prompt = (
+    "You are the official 'Health Promotion Bureau Navigator.' "
+    "Your knowledge is strictly based on the Strategic Plan 2024-2030 of the "
+    "National Health Promotion Programme, Sri Lanka. "
+    "Answer questions using the provided context regarding public health goals, "
+    "strategic objectives, and health policies in Sri Lanka. "
+    "If the answer is not in the document, politely say you don't know. "
+    "Keep answers professional and concise (max 3 sentences)."
     "\n\n"
-    {context}
-"""
-
+    "Context:\n{context}"
+)
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", system_prompt),
