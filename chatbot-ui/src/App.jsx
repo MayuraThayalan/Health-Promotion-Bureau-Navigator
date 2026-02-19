@@ -1,24 +1,41 @@
 import { useState } from "react";
 import "./App.css";
 
+const API_URL = "http://localhost:5000/chat";
+
 function App() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!input.trim()) return;
 
-    // Add user message right side
-    setMessages([...messages, { text: input, isUser: true }]);
+    const userMessage = { text: input, isUser: true };
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
-    setTimeout(() => {
-      const reply = `You asked: "${input}"\n\n`;
-      setMessages((prev) => [...prev, { text: reply, isUser: false }]);
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
+      if (!response.ok) throw new Error("Server responded with an error");
+      
+      const data = await response.json();
+      setMessages((prev) => [...prev, { text: data.answer, isUser: false }]);
+      
+    } catch (error) {
+      console.error("Error:", error);
+      setMessages((prev) => [
+        ...prev,
+        { text: "Error connecting to server.", isUser: false },
+      ]);
+    } finally {
       setLoading(false);
-    }, 900);
+    }
   };
 
   return (
