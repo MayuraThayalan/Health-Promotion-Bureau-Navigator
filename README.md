@@ -1,4 +1,4 @@
-##Sri Lanka Health Promotion Navigator
+## Sri Lanka Health Promotion Navigator
 
 This RAG-based AI assistant is specifically engineered to navigate the National Health Promotion Programme Strategic Plan (2024-2030) for Sri Lanka. It serves as a digital consultant for public health officials, students, and citizens to understand the future of health promotion in the country.
 
@@ -12,7 +12,7 @@ This RAG-based AI assistant is specifically engineered to navigate the National 
 * "How does the plan address non-communicable diseases (NCDs)?"
 * "What is the role of the Health Promotion Bureau according to the 2024-2030 plan?"
 
-##Tech Stack
+## Tech Stack
 **Frontend** React.js, Vite, CSS3  
 **Backend** Python, Flask, Flask-CORS  
 **Orchestration** LangChain  
