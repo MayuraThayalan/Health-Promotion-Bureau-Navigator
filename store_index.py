@@ -32,11 +32,19 @@ bm25_encoder = BM25Encoder().default()
 bm25_encoder.fit([d.page_content for d in text_chunks])
 bm25_encoder.dump("bm25_values.json")
 
+vectorstore = PineconeVectorStore.from_documents(
+    documents=text_chunks,
+    index_name=index_name,
+    embedding=embeddings,
+)
+
 #Creating the hybrid retriver
 retriever = PineconeHybridSearchRetriever(
     embeddings=embeddings, 
     sparse_encoder=bm25_encoder, 
-    index=index
+    index=index,
+     text_key="text"
+
 )
-retriever.add_documents(text_chunks)
+
 
