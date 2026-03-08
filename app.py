@@ -7,14 +7,15 @@ from dotenv import load_dotenv
 from src.helper import download_embeddings
 from src.prompt import prompt 
 
-from langchain_pinecone import PineconeVectorStore
+from pinecone import Pinecone
+from pinecone_text.sparse import BM25Encoder
+from langchain_community.retrievers import PineconeHybridSearchRetriever
 from langchain_groq import ChatGroq
 from langchain_classic.chains import create_retrieval_chain
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 
-base_path = Path(__file__).resolve().parent
-env_path = base_path / '.env'
-load_dotenv(dotenv_path=env_path)
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"])
@@ -26,13 +27,21 @@ if not PINECONE_API_KEY:
     print("ERROR: PINECONE_API_KEY not found in .env file!")
 
 embeddings = download_embeddings()
-vectorstore = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
+bm25_encoder = BM25Encoder().load("bm25_values.json")
 
+pc = Pinecone(api_key=PINECONE_API_KEY)
+index = pc.Index(INDEX_NAME)
+retriever = PineconeHybridSearchRetriever(
+    embeddings=embeddings, 
+    sparse_encoder=bm25_encoder, 
+    index=index,
+    top_k=4  # Number of document chunks to retrieve
+)
 llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0.4)
 
 # Build the RAG Chain
 combine_docs_chain = create_stuff_documents_chain(llm, prompt)
-rag_chain = create_retrieval_chain(vectorstore.as_retriever(), combine_docs_chain)
+rag_chain = create_retrieval_chain(retriever, combine_docs_chain)
 
 #Route
 @app.route("/chat", methods=["POST"])
